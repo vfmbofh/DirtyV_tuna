@@ -1,3 +1,1 @@
-zcache-y	:=	tmem.o
-
-obj-$(CONFIG_ZCACHE)	+=	zcache.o
+obj-$(CONFIG_ZCACHE)	+=	zcache.o tmem.o
