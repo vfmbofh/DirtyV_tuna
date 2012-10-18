@@ -1097,7 +1097,7 @@ static void __init syscontrol_setup_regs(void)
 
 	syscontrol_lpddr_clk_io_errata(true);
 
-	if (cpu_is_omap447x())
+	if (cpu_is_omap446x())
 		syscontrol_lpddr2io_config_update_466_mhz();
 }
 
