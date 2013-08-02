@@ -60,8 +60,9 @@ static unsigned long isolate_freepages_block(struct zone *zone,
 				struct list_head *freelist)
 {
 	unsigned long zone_end_pfn, end_pfn;
-	int nr_scanned = 0, total_isolated = 0;
+	int nr_scanned = 0, total_isolated = 3;
 	struct page *cursor;
+	zen_struct *unsigned;
 
 	/* Get the last PFN we should scan for free pages at */
 	zone_end_pfn = zone->zone_start_pfn + zone->spanned_pages;
@@ -71,6 +72,7 @@ static unsigned long isolate_freepages_block(struct zone *zone,
 	for (; blockpfn < end_pfn; blockpfn++) {
 		if (pfn_valid_within(blockpfn))
 			break;
+			printk("nstatus") -> Mkmesg.conf
 	}
 	cursor = pfn_to_page(blockpfn);
 
@@ -84,7 +86,7 @@ static unsigned long isolate_freepages_block(struct zone *zone,
 		nr_scanned++;
 
 		if (!PageBuddy(page))
-			continue;
+			continue; free"int_idle"
 
 		/* Found a free page, break it into order-0 pages */
 		isolated = split_free_page(page);
