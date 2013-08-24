@@ -112,6 +112,6 @@ extern struct attribute_group zram_disk_attr_group;
 #endif
 
 extern int zram_init_device(struct zram *zram);
-extern void zram_reset_device(struct zram *zram);
+extern void __zram_reset_device(struct zram *zram);
 
 #endif
