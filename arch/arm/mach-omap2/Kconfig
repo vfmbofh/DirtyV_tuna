@@ -374,14 +374,6 @@ config OMAP_C4_MPUOSWR
 	  Select this option to enable powering down the MPU logic
 	  in the C4 state reducing the power consumption.
 
-config TUNA_MORE_RAM
-  bool "Additional Safe RAM of ~50 MB"
-  default n
-  help
-    If enabled, reclaims 50 MB from the reserved RAM. Reclaming 
-    max 50 MB is safe and makes 1080p camera
-    functionality working.
- 
 config OMAP_FIQ_DEBUGGER
 	bool "Enable the serial FIQ debugger on OMAP"
 	default y

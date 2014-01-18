@@ -72,8 +72,6 @@
 #include "resetreason.h"
 #include <mach/dmm.h>
 
-#define TUNA_RAMCONSOLE_START	(PLAT_PHYS_OFFSET + SZ_512M)
-#define TUNA_RAMCONSOLE_SIZE	SZ_2M
 
 struct class *sec_class;
 EXPORT_SYMBOL(sec_class);
@@ -214,25 +212,6 @@ static struct platform_device wl1271_device = {
 	},
 };
 
-static struct resource ramconsole_resources[] = {
-	{
-		.flags  = IORESOURCE_MEM,
-		.start	= TUNA_RAMCONSOLE_START,
-		.end	= TUNA_RAMCONSOLE_START + TUNA_RAMCONSOLE_SIZE - 1,
-	},
-};
-
-static struct ram_console_platform_data ramconsole_pdata;
-
-static struct platform_device ramconsole_device = {
-	.name           = "ram_console",
-	.id             = -1,
-	.num_resources  = ARRAY_SIZE(ramconsole_resources),
-	.resource       = ramconsole_resources,
-	.dev		= {
-		.platform_data = &ramconsole_pdata,
-	},
-};
 
 static struct platform_device bcm4330_bluetooth_device = {
 	.name = "bcm4330_bluetooth",
@@ -285,11 +264,7 @@ static struct platform_device tuna_gpio_i2c5_device = {
 #define PHYS_ADDR_SMC_SIZE			(SZ_1M * 3)
 #define PHYS_ADDR_DUCATI_SIZE			(SZ_1M * 105)
 #define OMAP_TUNA_ION_HEAP_SECURE_INPUT_SIZE	(SZ_1M * 90)
-#ifdef CONFIG_TUNA_MORE_RAM
-#define OMAP_TUNA_ION_HEAP_TILER_SIZE    (SZ_1M * 31)
-#else
-#define OMAP_TUNA_ION_HEAP_TILER_SIZE    (SZ_1M * 81)
-#endif 
+#define OMAP_TUNA_ION_HEAP_TILER_SIZE		(SZ_1M * 11)
 #define OMAP_TUNA_ION_HEAP_NONSECURE_TILER_SIZE	(SZ_1M * 15)
 
 #define PHYS_ADDR_SMC_MEM	(0x80000000 + SZ_1G - PHYS_ADDR_SMC_SIZE)
@@ -340,7 +315,6 @@ static struct platform_device tuna_spdif_dit_device = {
 };
 
 static struct platform_device *tuna_devices[] __initdata = {
-	&ramconsole_device,
 	&wl1271_device,
 	&twl6030_madc_device,
 	&tuna_ion_device,
@@ -1393,7 +1367,7 @@ static void __init tuna_init(void)
 	tuna_audio_init();
 	tuna_i2c_init();
 	tuna_gsd4t_gps_init();
-	ramconsole_pdata.bootinfo = omap4_get_resetreason();
+
 	platform_add_devices(tuna_devices, ARRAY_SIZE(tuna_devices));
 	board_serial_init();
 	tuna_bt_init();
@@ -1441,7 +1415,6 @@ static void __init tuna_reserve(void)
 	int ret;
 
 	/* do the static reservations first */
-	memblock_remove(TUNA_RAMCONSOLE_START, TUNA_RAMCONSOLE_SIZE);
 	memblock_remove(PHYS_ADDR_SMC_MEM, PHYS_ADDR_SMC_SIZE);
 	memblock_remove(PHYS_ADDR_DUCATI_MEM, PHYS_ADDR_DUCATI_SIZE);
 
