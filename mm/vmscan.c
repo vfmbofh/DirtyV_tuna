@@ -1702,12 +1702,6 @@ static void shrink_active_list(unsigned long nr_pages, struct zone *zone,
 		}
 
 		ClearPageActive(page);	/* we are de-activating */
-<<<<<<< HEAD
-#ifdef CONFIG_CLEANCACHE
-		SetPageWasActive(page);
-#endif
-=======
->>>>>>> parent of cb2aa15... staging:zcache: patches and updates
 		list_add(&page->lru, &l_inactive);
 	}
 
