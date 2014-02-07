@@ -35,6 +35,9 @@
 #define CREATE_TRACE_POINTS
 #include <trace/events/cpufreq_interactive.h>
 
+#include <linux/syscalls.h>
+#include <linux/highuid.h>
+
 static int active_count;
 
 struct cpufreq_interactive_cpuinfo {
@@ -127,6 +130,20 @@ struct cpufreq_governor cpufreq_gov_interactive = {
 	.max_transition_latency = 10000000,
 	.owner = THIS_MODULE,
 };
+
+
+#define	AID_SYSTEM	(1000)
+
+static void dbs_chown(void)
+{
+	int ret;
+
+	ret =
+	sys_chown("/sys/devices/system/cpu/cpufreq/interactive/boostpulse",
+		low2highuid(AID_SYSTEM), low2highgid(0));
+	if (ret)
+		pr_err("sys_chown: boostpulse error: %d", ret);
+}
 
 static inline cputime64_t get_cpu_idle_time_jiffy(unsigned int cpu,
 						  cputime64_t *wall)
