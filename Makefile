@@ -380,7 +380,7 @@ KBUILD_CFLAGS   := -Wall -Wundef -Wstrict-prototypes -Wno-trigraphs \
 		   -fmodulo-sched -fmodulo-sched-allow-regmoves \
 		   -march=armv7-a -mcpu=cortex-a9 -mtune=cortex-a9 \
 		   -funswitch-loops -fpredictive-commoning -fgcse-after-reload \
-		   -fno-delete-null-pointer-checks
+		   -fno-delete-null-pointer-checks -pipe
 KBUILD_AFLAGS_KERNEL :=
 ifdef CCONFIG_CC_OPTIMIZE_O3
  KBUILD_CFLAGS_KERNEL := -O3 -mtune=cortex-a9 -march=armv7-a -mfpu=neon -ftree-vectorize
@@ -389,12 +389,13 @@ else
 endif
 
 ifdef CONFIG_CC_GRAPHITE_OPTIMIZATION
-KBUILD_CFLAGS        += -floop-interchange -floop-strip-mine \
-                 -floop-block
+KBUILD_CFLAGS        += -fgraphite-identity -floop-parallelize-all -floop-interchange -floop-strip-mine \
+
+                  -floop-block
 endif
 
 ifdef CONFIG_CC_LINK_TIME_OPTIMIZATION
-KBUILD_CFLAGS        += -flto -fno-toplevel-reorder
+KBUILD_CFLAGS        += -flto -fno-toplevel-reorder -fno-fat-lto-objects -ftlo=2
 endif
 
 KBUILD_AFLAGS   := -D__ASSEMBLY__
