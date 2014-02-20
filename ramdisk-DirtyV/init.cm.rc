@@ -18,31 +18,26 @@ on boot
     # interactive governor
     chown system system /sys/devices/system/cpu/cpufreq/interactive/timer_rate
     chmod 0664 /sys/devices/system/cpu/cpufreq/interactive/timer_rate
+    chown system system /sys/devices/system/cpu/cpufreq/interactive/timer_slack
+    chmod 0664 /sys/devices/system/cpu/cpufreq/interactive/timer_slack
     chown system system /sys/devices/system/cpu/cpufreq/interactive/min_sample_time
     chmod 0664 /sys/devices/system/cpu/cpufreq/interactive/min_sample_time
     chown system system /sys/devices/system/cpu/cpufreq/interactive/hispeed_freq
     chmod 0664 /sys/devices/system/cpu/cpufreq/interactive/hispeed_freq
+    chown system system /sys/devices/system/cpu/cpufreq/interactive/target_loads
+    chmod 0664 /sys/devices/system/cpu/cpufreq/interactive/target_loads
     chown system system /sys/devices/system/cpu/cpufreq/interactive/go_hispeed_load
     chmod 0664 /sys/devices/system/cpu/cpufreq/interactive/go_hispeed_load
     chown system system /sys/devices/system/cpu/cpufreq/interactive/above_hispeed_delay
     chmod 0664 /sys/devices/system/cpu/cpufreq/interactive/above_hispeed_delay
-    chown system system /sys/devices/system/cpu/cpufreq/interactive/boost
-    chmod 0664 /sys/devices/system/cpu/cpufreq/interactive/boost
     chown system system /sys/devices/system/cpu/cpufreq/interactive/boostpulse
     chmod 0664 /sys/devices/system/cpu/cpufreq/interactive/boostpulse
-    chown system system /sys/devices/system/cpu/cpufreq/interactive/input_boost
-    chmod 0664 /sys/devices/system/cpu/cpufreq/interactive/input_boost
     chown system system /sys/devices/system/cpu/cpufreq/interactive/boostpulse_duration
     chmod 0664 /sys/devices/system/cpu/cpufreq/interactive/boostpulse_duration
+    chown system system /sys/devices/system/cpu/cpufreq/interactive/input_boost_freq
+    chmod 0664 /sys/devices/system/cpu/cpufreq/interactive/input_boost_freq
     chown system system /sys/devices/system/cpu/cpufreq/interactive/io_is_busy
     chmod 0664 /sys/devices/system/cpu/cpufreq/interactive/io_is_busy
-    chown system system /sys/devices/system/cpu/cpufreq/interactive/sync_freq
-    chmod 0664 /sys/devices/system/cpu/cpufreq/interactive/sync_freq
-    chown system system /sys/devices/system/cpu/cpufreq/interactive/up_threshold_any_cpu_load
-    chmod 0664 /sys/devices/system/cpu/cpufreq/interactive/up_threshold_any_cpu_load
-    chown system system /sys/devices/system/cpu/cpufreq/interactive/sampling_down_factor
-    chmod 0664 /sys/devices/system/cpu/cpufreq/interactive/sampling_down_factor
-
 
     # ondemand governor
     chown system system /sys/devices/system/cpu/cpufreq/ondemand/boostfreq
@@ -75,6 +70,74 @@ on boot
     chmod 0664 /sys/devices/system/cpu/cpufreq/ondemand/sync_freq
     chown system system /sys/devices/system/cpu/cpufreq/ondemand/up_threshold_any_cpu_load
     chmod 0664 /sys/devices/system/cpu/cpufreq/ondemand/up_threshold_any_cpu_load
+
+    # ondemandx governor
+    chown system system /sys/devices/system/cpu/cpufreq/ondemandx/ignore_nice_load
+    chmod 0664 /sys/devices/system/cpu/cpufreq/ondemandx/ignore_nice_load
+    chown system system /sys/devices/system/cpu/cpufreq/ondemandx/io_is_busy
+    chmod 0664 /sys/devices/system/cpu/cpufreq/ondemandx/io_is_busy
+    chown system system /sys/devices/system/cpu/cpufreq/ondemandx/powersave_bias
+    chmod 0664 /sys/devices/system/cpu/cpufreq/ondemandx/powersave_bias
+    chown system system /sys/devices/system/cpu/cpufreq/ondemandx/sampling_rate
+    chmod 0664 /sys/devices/system/cpu/cpufreq/ondemandx/sampling_rate
+    chown system system /sys/devices/system/cpu/cpufreq/ondemandx/sampling_rate_min
+    chmod 0664 /sys/devices/system/cpu/cpufreq/ondemandx/sampling_rate_min
+    chown system system /sys/devices/system/cpu/cpufreq/ondemandx/suspend_freq
+    chmod 0664 /sys/devices/system/cpu/cpufreq/ondemandx/suspend_freq
+    chown system system /sys/devices/system/cpu/cpufreq/ondemandx/up_threshold
+    chmod 0664 /sys/devices/system/cpu/cpufreq/ondemandx/up_threshold
+
+    # ondemandplus governor
+    chown system system /sys/devices/system/cpu/cpufreq/ondemandplus/down_differential
+    chmod 0664 /sys/devices/system/cpu/cpufreq/ondemandplus/down_differential
+    chown system system /sys/devices/system/cpu/cpufreq/ondemandplus/inter_hifreq
+    chmod 0664 /sys/devices/system/cpu/cpufreq/ondemandplus/inter_hifreq
+    chown system system /sys/devices/system/cpu/cpufreq/ondemandplus/inter_lofreq
+    chmod 0664 /sys/devices/system/cpu/cpufreq/ondemandplus/inter_lofreq
+    chown system system /sys/devices/system/cpu/cpufreq/ondemandplus/inter_staycycles
+    chmod 0664 /sys/devices/system/cpu/cpufreq/ondemandplus/inter_staycycles
+    chown system system /sys/devices/system/cpu/cpufreq/ondemandplus/io_is_busy
+    chmod 0664 /sys/devices/system/cpu/cpufreq/ondemandplus/io_is_busy
+    chown system system /sys/devices/system/cpu/cpufreq/ondemandplus/staycycles_resetfreq
+    chmod 0664 /sys/devices/system/cpu/cpufreq/ondemandplus/staycycles_resetfreq
+    chown system system /sys/devices/system/cpu/cpufreq/ondemandplus/timer_rate
+    chmod 0664 /sys/devices/system/cpu/cpufreq/ondemandplus/timer_rate
+    chown system system /sys/devices/system/cpu/cpufreq/ondemandplus/up_threshold
+    chmod 0664 /sys/devices/system/cpu/cpufreq/ondemandplus/up_threshold
+
+    # adaptive governor
+    chown system system /sys/devices/system/cpu/cpufreq/adaptive/ignore_nice_load
+    chmod 0664 /sys/devices/system/cpu/cpufreq/adaptive/ignore_nice_load
+    chown system system /sys/devices/system/cpu/cpufreq/adaptive/io_is_busy
+    chmod 0664 /sys/devices/system/cpu/cpufreq/adaptive/io_is_busy
+    chown system system /sys/devices/system/cpu/cpufreq/adaptive/sampling_rate
+    chmod 0664 /sys/devices/system/cpu/cpufreq/adaptive/sampling_rate
+    chown system system /sys/devices/system/cpu/cpufreq/ondemandx/sampling_rate_max
+    chmod 0664 /sys/devices/system/cpu/cpufreq/adaptive/sampling_rate_max
+    chown system system /sys/devices/system/cpu/cpufreq/adaptive/sampling_rate_min
+    chmod 0664 /sys/devices/system/cpu/cpufreq/adaptive/sampling_rate_min
+    chown system system /sys/devices/system/cpu/cpufreq/adaptive/up_threshold
+    chmod 0664 /sys/devices/system/cpu/cpufreq/adaptive/up_threshold
+
+    # wheatley governor
+    chown system system /sys/devices/system/cpu/cpufreq/wheatley/allowed_misses
+    chmod 0664 /sys/devices/system/cpu/cpufreq/wheatley/allowed_misses
+    chown system system /sys/devices/system/cpu/cpufreq/wheatley/ignore_nice_load
+    chmod 0664 /sys/devices/system/cpu/cpufreq/wheatley/ignore_nice_load
+    chown system system /sys/devices/system/cpu/cpufreq/wheatley/io_is_busy
+    chmod 0664 /sys/devices/system/cpu/cpufreq/wheatley/io_is_busy
+    chown system system /sys/devices/system/cpu/cpufreq/wheatley/powersave_bias
+    chmod 0664 /sys/devices/system/cpu/cpufreq/wheatley/powersave_bias
+    chown system system /sys/devices/system/cpu/cpufreq/wheatley/sampling_down_factor
+    chmod 0664 /sys/devices/system/cpu/cpufreq/wheatley/sampling_down_factor
+    chown system system /sys/devices/system/cpu/cpufreq/wheatley/sampling_rate
+    chmod 0664 /sys/devices/system/cpu/cpufreq/wheatley/sampling_rate
+    chown system system /sys/devices/system/cpu/cpufreq/wheatley/sampling_rate_min
+    chmod 0664 /sys/devices/system/cpu/cpufreq/wheatley/sampling_rate_min
+    chown system system /sys/devices/system/cpu/cpufreq/wheatley/target_residency
+    chmod 0664 /sys/devices/system/cpu/cpufreq/wheatley/target_residency
+    chown system system /sys/devices/system/cpu/cpufreq/wheatley/up_threshold
+    chmod 0664 /sys/devices/system/cpu/cpufreq/wheatley/up_threshold
 
     # Assume SMP uses shared cpufreq policy for all CPUs
     chown system system /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor
