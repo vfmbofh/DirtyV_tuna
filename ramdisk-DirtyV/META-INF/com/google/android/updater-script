@@ -1,7 +1,7 @@
 show_progress(1.34, 4);
 ui_print("");
 ui_print("DirtyV by bsmitty83 @ xda-developers");
-ui_print("Ramdisk by osmOsis  @ xda");
+ui_print("Ramdisk by osmOsis  @ xda-developers");
 ui_print("");
 ui_print("Installing kernel...");
 mount("ext4", "EMMC", "/dev/block/platform/omap/omap_hsmmc.0/by-name/system", "/system");
