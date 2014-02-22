@@ -35,12 +35,6 @@
 #define TUNA_FB_RAM_SIZE		SZ_16M /* ~1280*720*4 * 2 */
 #endif
 
-#ifdef CONFIG_TUNA_SUPERRAM
-#define TUNA_FB_RAM_SIZE    SZ_1M * 11 /* ~1280*720*4 * 2 */
-#else
-#define TUNA_FB_RAM_SIZE		SZ_16M /* ~1280*720*4 * 2 */
-#endif
-
 #define TUNA_GPIO_MLCD_RST		23
 
 /* 4.65" Panel ID Info (D1h 1st Para) */
