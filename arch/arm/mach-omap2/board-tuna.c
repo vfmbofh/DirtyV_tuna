@@ -264,10 +264,14 @@ static struct platform_device tuna_gpio_i2c5_device = {
 #define PHYS_ADDR_SMC_SIZE			(SZ_1M * 3)
 #define PHYS_ADDR_DUCATI_SIZE			(SZ_1M * 105)
 #define OMAP_TUNA_ION_HEAP_SECURE_INPUT_SIZE	(SZ_1M * 90)
-#ifdef CONFIG_TUNA_BIGMEM
-#define OMAP_TUNA_ION_HEAP_TILER_SIZE    (SZ_1M * 11)
-#else
+#ifdef CONFIG_TUNA_SUPER_RAM
+#define OMAP_TUNA_ION_HEAP_TILER_SIZE           (SZ_1M * 11)
+#endif
+#ifdef CONFIG_TUNA_BIG_MEM
 #define OMAP_TUNA_ION_HEAP_TILER_SIZE		(SZ_1M * 31)
+#endif
+#ifdef CONFIG_TUNA_STOCK_RAM
+#define OMAP_TUNA_ION_HEAP_TILER_SIZE		(SZ_1M * 81)
 #endif
 #define OMAP_TUNA_ION_HEAP_NONSECURE_TILER_SIZE	(SZ_1M * 15)
 
