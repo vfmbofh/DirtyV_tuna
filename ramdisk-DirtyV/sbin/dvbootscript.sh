@@ -33,7 +33,7 @@ if [ ! -e /system/etc/init.d ]; then
 fi;
 $bb mount -o ro,remount /system;
 
-# fix governor permissions on older underlying ramdisks
+# fix permissions for any included governors (and older underlying ramdisks)
 governor=reset;
 while sleep 1; do
   current=`cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor`;
@@ -41,7 +41,7 @@ while sleep 1; do
     governor=$current;
     for i in /sys/devices/system/cpu/cpufreq/*; do
       $bb chown system:system $i/*;
-      $bb chmod 666 $i/*;
+      $bb chmod 664 $i/*;
     done;
   fi;
 done&
@@ -65,9 +65,6 @@ echo 1 > /proc/sys/net/ipv4/tcp_timestamps;
 for i in /sys/class/net/*; do
   echo 0 > $i/tx_queue_len;
 done;
-
-# set default TCP CAA to westwood
-echo "westwood" > /proc/sys/net/ipv4/tcp_congestion_control;
 
 # decrease fs lease time
 echo 10 > /proc/sys/fs/lease-break-time;
