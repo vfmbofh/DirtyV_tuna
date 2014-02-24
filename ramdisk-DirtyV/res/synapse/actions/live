@@ -1,0 +1,25 @@
+CPU="$((`cat /sys/devices/platform/omap/omap_temp_sensor.0/temperature` / 1000))°C"
+BATTERY="$((`cat /sys/devices/platform/omap/omap_i2c.4/i2c-4/4-0036/power_supply/battery/temp` / 10))°C"
+GPU=`cat /sys/devices/system/cpu/cpu0/cpufreq/gpu_clock`
+GPUFREQ="${GPU// Mhz/} MHz"
+
+if [ -e /sys/devices/system/cpu/cpu0/cpufreq/scaling_cur_freq ]; then
+	CPUFREQONE="$((`cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_cur_freq` / 1000)) MHz"
+else
+	CPUFREQONE=Offline
+fi
+
+if [ -e /sys/devices/system/cpu/cpu1/cpufreq/scaling_cur_freq ]; then
+	CPUFREQTWO="$((`cat /sys/devices/system/cpu/cpu1/cpufreq/scaling_cur_freq` / 1000)) MHz"
+else
+	CPUFREQTWO=Offline
+fi
+
+case $1 in
+	cpufreq)
+		echo "Core 1: $CPUFREQONE@nCore 2: $CPUFREQTWO" ;;
+	temp)
+		echo "CPU: $CPU      Battery: $BATTERY" ;;
+	gpufreq)
+		echo "$GPUFREQ" ;;
+esac

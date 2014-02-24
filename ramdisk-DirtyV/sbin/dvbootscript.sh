@@ -33,6 +33,9 @@ if [ ! -e /system/etc/init.d ]; then
 fi;
 $bb mount -o ro,remount /system;
 
+# set up Synapse support
+/sbin/uci;
+
 # fix permissions for any included governors (and older underlying ramdisks)
 governor=reset;
 while sleep 1; do
