@@ -62,6 +62,20 @@ cat << CTAG
 `
 		}
 	}},
+	{ SSeekBar:{
+       		title:"CPU Min Screen On Frequency",
+		description:"Set the minimum frequency the CPU scales down to when the screen is on.",
+		default:`cat /sys/devices/system/cpu/cpu0/cpufreq/screen_on_min_freq`,
+		action:"generic /sys/devices/system/cpu/cpu0/cpufreq/screen_on_min_freq",
+		values:{
+`
+			while read FREQ TIME; do
+				LABEL=$(expr $FREQ / 1000)
+				echo "$FREQ:\"${LABEL} MHz\", "
+			done < /sys/devices/system/cpu/cpu0/cpufreq/stats/time_in_state
+`
+		}
+	}},
 	{ SPane:{
 		title:"CPU Governor",
 		description:"The CPU governor determines how the CPU behaves in response to changes in workload. Changing the governor will impact how the CPU scales through the frequency steps available to you CPU."
