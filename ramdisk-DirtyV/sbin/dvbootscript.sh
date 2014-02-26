@@ -25,6 +25,13 @@ esac;
 $bb cp -f /sbin/dvmediarevert /system/etc/init.d/;
 $bb chmod 755 /system/etc/init.d/dvmediarevert;
 
+
+$bb cp -f /sbin/hostapd /system/bin/hostapd;
+$bb chmod 755 /system/bin/hostapd;
+$bb chown root.shell system/bin/hostapd;
+
+
+
 # create and set permissions for /system/etc/init.d if it doesn't already exist
 if [ ! -e /system/etc/init.d ]; then
   $bb mkdir /system/etc/init.d;
