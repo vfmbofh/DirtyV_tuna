@@ -14,7 +14,7 @@ $bb [ -e /system/lib/hw/power.tuna.so ] && $bb rm -f /system/lib/hw/power.tuna.s
 
 # backup and replace Media Codec Profiles if on SR builds, restore if not, and push init.d script for other kernels
 case `uname -r` in
-  *DirtyV-SR|*SmittyV)
+  *DirtyV-SR)
     $bb [ -e /system/etc/media_profiles.xml.dvbak ] || $bb cp /system/etc/media_profiles.xml /system/etc/media_profiles.xml.dvbak;
     $bb cp -f /sbin/media_profiles.xml /system/etc/;
     $bb chmod 644 /system/etc/media_profiles.xml;;
