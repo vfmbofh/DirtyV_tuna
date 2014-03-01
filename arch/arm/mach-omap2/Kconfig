@@ -447,18 +447,18 @@ choice
   depends on MACH_TUNA
 
 config TUNA_SUPER_RAM
-    bool "Additional 85 MB userspace RAM for Tuna"
+    bool "Additional 70 MB userspace RAM for Tuna"
 	depends on MACH_TUNA
 	default n
 	help
-	  If enabled, approximately 85 MB of additional RAM will be available.
+	  If enabled, approximately 70 MB of additional RAM will be available.
 
 config TUNA_BIG_MEM
-    bool "Additional 55 MB userspace RAM for Tuna"
+    bool "Additional 40 MB userspace RAM for Tuna"
 	depends on MACH_TUNA
 	default n
 	help
-	  If enabled, approximately 55 MB of additional RAM will be available.
+	  If enabled, approximately 40 MB of additional RAM will be available.
 
 config TUNA_STOCK_RAM
     bool "Additional 0 MB userspace RAM for Tuna"
