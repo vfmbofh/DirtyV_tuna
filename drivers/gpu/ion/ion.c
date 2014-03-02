@@ -294,8 +294,11 @@ EXPORT_SYMBOL(ion_alloc);
 
 void ion_free(struct ion_client *client, struct ion_handle *handle)
 {
+
 	bool valid_handle;
 
+	if (WARN_ON(!client || !handle))
+		return;
 	BUG_ON(client != handle->client);
 
 	mutex_lock(&client->lock);
