@@ -145,6 +145,7 @@ int omap_tiler_alloc(struct ion_heap *heap,
 	}
 
 	buffer = ion_handle_buffer(handle);
+	buffer->heap = heap;	/* clarify tiler heap */
 	buffer->size = info->n_tiler_pages * PAGE_SIZE;
 	buffer->priv_virt = info;
 	data->handle = handle;
