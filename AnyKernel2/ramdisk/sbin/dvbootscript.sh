@@ -20,7 +20,7 @@ $bb chmod 755 /system/bin/hostapd;
 
 # backup and replace Media Codec Profiles if on SR builds, restore if not, and push init.d script for other kernels
 case `uname -r` in
-  *DirtyV-SR|*SmittyV)
+  *DirtyV-SR)
     $bb [ -e /system/etc/media_profiles.xml.dvbak ] || $bb cp /system/etc/media_profiles.xml /system/etc/media_profiles.xml.dvbak;
     $bb cp -f /sbin/media_profiles.xml /system/etc/;
     $bb chmod 644 /system/etc/media_profiles.xml;;
@@ -82,7 +82,7 @@ echo 10 > /proc/sys/fs/lease-break-time;
 echo 128 > /proc/sys/kernel/random/read_wakeup_threshold;
 echo 256 > /proc/sys/kernel/random/write_wakeup_threshold;
 
-# disable ASLR
+# disabled ASLR to increase AEM-JIT cache hit rate
 echo 0 > /proc/sys/kernel/randomize_va_space;
 
 # double the default minfree kb
@@ -118,6 +118,9 @@ while sleep 1; do
     [ `cat $lmk` != $minfree ] && echo $minfree > $lmk || exit;
   fi;
 done&
+
+# set up Synapse support
+/sbin/uci;
 
 # wait for systemui and increase its priority
 while sleep 1; do
