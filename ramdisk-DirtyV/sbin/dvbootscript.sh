@@ -12,6 +12,12 @@ $bb [ -e /system/etc/sysctl.conf ] && $bb mv -f /system/etc/sysctl.conf /system/
 $bb [ -e /system/lib/hw/power.tuna.so.dvbak ] || $bb cp /system/lib/hw/power.tuna.so /system/lib/hw/power.tuna.so.dvbak;
 $bb [ -e /system/lib/hw/power.tuna.so ] && $bb rm -f /system/lib/hw/power.tuna.so;
 
+# backup and replace Host AP Daemon for working Wi-Fi tether on 3.4 kernel Wi-Fi drivers
+$bb [ -e /system/bin/hostapd.dvbak ] || $bb cp /system/bin/hostapd /system/bin/hostapd.dvbak;
+$bb cp -f /sbin/hostapd /system/bin/;
+$bb chown root.shell /system/bin/hostapd;
+$bb chmod 755 /system/bin/hostapd;
+
 # backup and replace Media Codec Profiles if on SR builds, restore if not, and push init.d script for other kernels
 case `uname -r` in
   *DirtyV-SR)
@@ -25,13 +31,6 @@ esac;
 $bb cp -f /sbin/dvmediarevert /system/etc/init.d/;
 $bb chmod 755 /system/etc/init.d/dvmediarevert;
 
-
-$bb cp -f /sbin/hostapd /system/bin/hostapd;
-$bb chmod 755 /system/bin/hostapd;
-$bb chown root.shell system/bin/hostapd;
-
-
-
 # create and set permissions for /system/etc/init.d if it doesn't already exist
 if [ ! -e /system/etc/init.d ]; then
   $bb mkdir /system/etc/init.d;
@@ -39,9 +38,6 @@ if [ ! -e /system/etc/init.d ]; then
   $bb chmod -R 755 /system/etc/init.d;
 fi;
 $bb mount -o ro,remount /system;
-
-# set up Synapse support
-/sbin/uci;
 
 # fix permissions for any included governors (and older underlying ramdisks)
 governor=reset;
@@ -57,12 +53,12 @@ while sleep 1; do
 done&
 
 # disable debugging
-echo "0" > /sys/module/wakelock/parameters/debug_mask;
-echo "0" > /sys/module/userwakelock/parameters/debug_mask;
-echo "0" > /sys/module/earlysuspend/parameters/debug_mask;
-echo "0" > /sys/module/alarm/parameters/debug_mask;
-echo "0" > /sys/module/alarm_dev/parameters/debug_mask;
-echo "0" > /sys/module/binder/parameters/debug_mask;
+echo 0 > /sys/module/wakelock/parameters/debug_mask;
+echo 0 > /sys/module/userwakelock/parameters/debug_mask;
+echo 0 > /sys/module/earlysuspend/parameters/debug_mask;
+echo 0 > /sys/module/alarm/parameters/debug_mask;
+echo 0 > /sys/module/alarm_dev/parameters/debug_mask;
+echo 0 > /sys/module/binder/parameters/debug_mask;
 
 # suitable configuration to help reduce network latency
 echo 2 > /proc/sys/net/ipv4/tcp_ecn;
@@ -76,6 +72,9 @@ for i in /sys/class/net/*; do
   echo 0 > $i/tx_queue_len;
 done;
 
+# initialize timer slack
+echo 100000000 > /dev/cpuctl/apps/bg_non_interactive/timer_slack.min_slack_ns;
+
 # decrease fs lease time
 echo 10 > /proc/sys/fs/lease-break-time;
 
@@ -83,10 +82,7 @@ echo 10 > /proc/sys/fs/lease-break-time;
 echo 128 > /proc/sys/kernel/random/read_wakeup_threshold;
 echo 256 > /proc/sys/kernel/random/write_wakeup_threshold;
 
-# initialize timer slack
-echo 100000000 > /dev/cpuctl/apps/bg_non_interactive/timer_slack.min_slack_ns;
-
-# disable ASLR
+# disabled ASLR to increase AEM-JIT cache hit rate
 echo 0 > /proc/sys/kernel/randomize_va_space;
 
 # double the default minfree kb
@@ -122,6 +118,9 @@ while sleep 1; do
     [ `cat $lmk` != $minfree ] && echo $minfree > $lmk || exit;
   fi;
 done&
+
+# set up Synapse support
+/sbin/uci;
 
 # wait for systemui and increase its priority
 while sleep 1; do
