@@ -100,6 +100,8 @@ replace_file() {
 # set permissions for included files
 chmod -R 755 $ramdisk
 chmod 644 $ramdisk/sbin/media_profiles.xml
+chmod 644 $ramdisk/res/synapse/*
+chmod -R 755 $ramdisk/res/synapse/actions
 
 
 ## AnyKernel install
